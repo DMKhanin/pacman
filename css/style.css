@@ -1,6 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 canvas{
     border-radius: 5px;
     display: block;
     margin: 0 auto;
     background: #acacac;
+}
+.debug{
+    position: absolute;
+    width: 100px;
+    height: 400px;
+    background: #ececec;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 15px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.btn-hide{
+
 }
