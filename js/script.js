@@ -52,16 +52,16 @@ $(document).ready(function () {
             case 270: packman.positionY -=4; break;
             default: break;
         }
-        if (packman.positionX == 20) {
+        if (packman.positionX <= 20) {
             packman.rotation = 0;
         }
-        if (packman.positionX == 780) {
+        if (packman.positionX >= 780) {
             packman.rotation = 180;
         }
-        if (packman.positionY == 20) {
+        if (packman.positionY <= 20) {
             packman.rotation = 90;
         }
-        if (packman.positionY == 580) {
+        if (packman.positionY >= 580) {
             packman.rotation = 270;
         }
     }
