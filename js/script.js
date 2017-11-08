@@ -122,7 +122,7 @@ $(document).ready(function () {
                 if (map[i][j] == 2) {
                     ctx.fillStyle = "White"; //цвет заливки
                     ctx.beginPath(); //начинаем рисование
-                    ctx.arc(j * 20 + 10, i * 20 + 10, 5, 0, 10); //рисуем круг
+                    ctx.arc(j * 20 + 11, i * 20 + 11, 3, 0, 10); //рисуем круг
                     ctx.closePath(); // завершаем рисование
                     ctx.fill(); //заливаем
                 }
@@ -259,6 +259,11 @@ $(document).ready(function () {
 
     $("#hide").click(function () {
         document.getElementById("help").style.display = "none";
+        document.getElementById("visible").style.display = "block";
+    });
+    $("#visible").click(function () {
+        document.getElementById("help").style.display = "block";
+        document.getElementById("visible").style.display = "none";
     });
     $("#start").click(function () {
         document.getElementById("modal").style.display = "none";
