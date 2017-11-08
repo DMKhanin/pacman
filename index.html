@@ -3,18 +3,52 @@
 
 <head>
     <title></title>
+    <meta charset="utf-8">
     <script src="js/jquery.min.js"></script>
     <script src="js/script.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <div id="modal">
+        <p>PACMAN</p>
+        <br>
+        <div>
+        <p class="top_results_title">Top 5 results</p>
+        <p class="top_results">VASYSA_2914 RESULT = 213</p>
+        <p class="top_results">VASYSA_2911 RESULT = 212</p>
+        <p class="top_results">VASYSA_2912 RESULT = 211</p>
+        <p class="top_results">VASYSA_2913 RESULT = 210</p>
+        <p class="top_results">VASYSA_2915 RESULT = 209</p>
+        </div>
+        <br>
+        <button id="start">Start game</button>
+    </div>
+    <div id="modal-loose">
+            <p>PACMAN</p>
+            <p style="color:red;">You dead</p>
+            <div>
+                <p class="top_results_title">Your result</p>
+                <p class="top_results">123</p>
+            </div>
+            <div>
+            <p class="top_results_title">Top 5 results</p>
+            <p class="top_results">VASYSA_2914 RESULT = 213</p>
+            <p class="top_results">VASYSA_2911 RESULT = 212</p>
+            <p class="top_results">VASYSA_2912 RESULT = 211</p>
+            <p class="top_results">VASYSA_2913 RESULT = 210</p>
+            <p class="top_results">VASYSA_2915 RESULT = 209</p>
+            </div>
+            <br>
+            <button id="restart">Restart game</button>
+        </div>
     <div id="help" class="debug">
         <h3>Game</h3>
         <br>
         <p>You playing:</p>
         <p id="p_timer">0H, 0M, 0S</p>
         <p id="p_score"></p>
+        <p id="p_lives">Lives = 3</p>
         <br>
         <h3>Controls</h3>
         <br>

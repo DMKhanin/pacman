@@ -9,6 +9,18 @@ $(document).ready(function () {
     var save_position_y = 110;
     var q;
     var e=0;
+    var packman = {
+        positionX: 30, //        позиция по X
+        positionY: 110, //       позиция по y
+        rotation: 0, //          направление вправо 
+        currentIndX: 1, //       текущий индекс по x
+        currentIndY: 5, //       текущий индекс по y
+        speed: 4, //             скорость
+        save_position_x:30, //   предъидущая позиция по x
+        save_position_y: 110,//  предъидущая позиция по x
+        lives: 3,
+        score: 0
+    };
     var timer = {
         s: 0,
         m: 0,
@@ -49,17 +61,6 @@ $(document).ready(function () {
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  //600 29
     ];
      /* Объявление пакэмена*/
-    var packman = {
-        positionX: 30, //        позиция по X
-        positionY: 110, //       позиция по y
-        rotation: 0, //          направление вправо 
-        currentIndX: 1, //       текущий индекс по x
-        currentIndY: 5, //       текущий индекс по y
-        speed: 4, //             скорость
-        save_position_x:30, //   предъидущая позиция по x
-        save_position_y: 110,//  предъидущая позиция по x
-        score: 0
-    };
      /* Функция управления персонажем
         проверяется нажатие клавиши
         изменяется направление игрока в зависимости от нажатой клавиши
@@ -82,23 +83,28 @@ $(document).ready(function () {
                 packman.rotation = 180; //  влево
                 packman.positionX = packman.currentIndX*20+10;
                 packman.positionY = packman.currentIndY*20+10;
+                if(map[packman.currentIndY][packman.currentIndX-1]==1){packman.lives--;}
                 break;
             case "W":
                 packman.rotation = 270; //  вверх
                 packman.positionX = packman.currentIndX*20+10;
                 packman.positionY = packman.currentIndY*20+10;
+                if(map[packman.currentIndY-1][packman.currentIndX]==1){packman.lives--;}
                 break;
             case "D":
                 packman.rotation = 0; //    вправо
                 packman.positionX = packman.currentIndX*20+10;
                 packman.positionY = packman.currentIndY*20+10;
+                if(map[packman.currentIndY][packman.currentIndX+1]==1){packman.lives--;}
                 break;
             case "S":
                 packman.rotation = 90; //   вниз
                 packman.positionX = packman.currentIndX*20+10;
                 packman.positionY = packman.currentIndY*20+10;
+                if(map[packman.currentIndY+1][packman.currentIndX]==1){packman.lives--;}
                 break;
         }
+        document.getElementById("p_lives").innerText = "Lives = " + packman.lives;
     }
      /* Функция отрисовки карты
         рисуется карта из массива
@@ -143,6 +149,7 @@ $(document).ready(function () {
                 packman.speed = 4;
             } else {
                 packman.speed=0;
+               
             };
             break;
             case 180: 
@@ -153,6 +160,7 @@ $(document).ready(function () {
                      packman.speed = 4;
                     }else {
                         packman.speed=0;
+                        document.getElementById("p_lives").innerText = "Lives = " + packman.lives;
                     }; 
            break;
             case 90:
@@ -162,7 +170,7 @@ $(document).ready(function () {
            if(map[packman.currentIndY+1][packman.currentIndX]==0 || map[packman.currentIndY+1][packman.currentIndX]==2) {
                        packman.speed = 4;
                    }else {
-                       packman.speed=0;
+                       packman.speed=0; 
                    }; 
             break;
             case 270:
@@ -172,7 +180,7 @@ $(document).ready(function () {
             if(map[packman.currentIndY-1][packman.currentIndX]==0 || map[packman.currentIndY-1][packman.currentIndX]==2) {
                 packman.speed = 4;
             }else {
-                packman.speed=0;
+                packman.speed=0;       
             }; 
             break;
             
@@ -188,6 +196,9 @@ $(document).ready(function () {
         проверяется кадр анимации отрисовывается карта и пакмэн
      */
     function game() {
+        if (packman.lives<0){
+            document.getElementById("modal-loose").style.display = "block";
+        };
         ctx.clearRect(0, 0, 800, 600);
         drawMap();
         move();
@@ -245,12 +256,16 @@ $(document).ready(function () {
         ctx.fill(); //заливаем
     }
 
-
-    setInterval(game, 60);
-    setInterval(changeTImer, 1000);
     $("#hide").click(function () {
         document.getElementById("help").style.display = "none";
     });
-
+    $("#start").click(function () {
+        document.getElementById("modal").style.display = "none";
+        setInterval(game, 60);
+        setInterval(changeTImer, 1000);
+    });
+    $("#restart").click(function () {
+        window.location.reload(true);
+    });
 
 })
