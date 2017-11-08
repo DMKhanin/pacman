@@ -12,7 +12,6 @@ canvas{
     margin: 0 auto;
     margin-top: 10px;
     background: black;
-    border: 2px solid blue;
 }
 .debug{
     color: blue;
