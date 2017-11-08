@@ -43,37 +43,41 @@ $(document).ready(function () {
         [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], //120  5
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  //600 29
     ];
-
+     /* Объявление пакэмена*/
     var packman = {
-        positionX: 30,
-        positionY: 110,
-        rotation: 0,
-        currentIndX: 1,
-        currentIndY: 5,
-        speed: 4,
-        save_position_x:30,
-        save_position_y: 110,
+        positionX: 30, //        позиция по X
+        positionY: 110, //       позиция по y
+        rotation: 0, //          направление вправо 
+        currentIndX: 1, //       текущий индекс по x
+        currentIndY: 5, //       текущий индекс по y
+        speed: 4, //             скорость
+        save_position_x:30, //   предъидущая позиция по x
+        save_position_y: 110,//  предъидущая позиция по x
         score: 0
     };
+     /* Функция управления персонажем
+        проверяется нажатие клавиши
+        изменяется направление игрока в зависимости от нажатой клавиши
+     */
     function control() {
         switch (String.fromCharCode(event.keyCode)) {
-            case "A":
-                packman.rotation = 180;
+            case "A": 
+                packman.rotation = 180; //  влево
                 break;
             case "W":
-                packman.rotation = 270;
+                packman.rotation = 270; //  вверх
                 break;
             case "D":
-                packman.rotation = 0;
+                packman.rotation = 0; //    вправо
                 break;
             case "S":
-                packman.rotation = 90;
+                packman.rotation = 90; //   вниз
                 break;
         }
     }
-    /*if (map[i+1][j]==1){
-        ctx.fillRect(j*40+10,i*40-20,20,80);
-    }*/
+     /* Функция отрисовки карты
+        рисуется карта из массива
+     */
     function drawMap() {
         for (var i = 0; i < 30; i++) {
             for (var j = 0; j < 40; j++) {
@@ -95,6 +99,15 @@ $(document).ready(function () {
         }
 
     }
+    /* Функция движения
+        проверяется отсутстиве стены в зависимости от направления
+        изменение текущей позиции в массиве
+        проверка наличия монетки на текущей позиции
+        выбираем направлеие
+            если позиция пакмэна изменилась на 20 переприсваеваем его позицию в следующий элемент
+            если на следующем индексе массива находится стена тогда останавливаем
+        если на текущей позиции есть монетка добавляем монетку к счётчику и удаляем монетку
+     */
     function move(){
         switch (packman.rotation){
             case 0: 
@@ -145,6 +158,9 @@ $(document).ready(function () {
             map[packman.currentIndY][packman.currentIndX]=0;
         }
     }
+     /* Функция игры
+        проверяется кадр анимации отрисовывается карта и пакмэн
+     */
     function game() {
         ctx.clearRect(0, 0, 800, 600);
         drawMap();
