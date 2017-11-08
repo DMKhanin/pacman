@@ -196,7 +196,8 @@ $(document).ready(function () {
         проверяется кадр анимации отрисовывается карта и пакмэн
      */
     function game() {
-        if (packman.lives<0){
+        if (packman.lives<=0){
+            document.getElementById("canvas").style.display = "none";
             document.getElementById("modal-loose").style.display = "block";
         };
         ctx.clearRect(0, 0, 800, 600);
@@ -261,10 +262,12 @@ $(document).ready(function () {
     });
     $("#start").click(function () {
         document.getElementById("modal").style.display = "none";
+        document.getElementById("canvas").style.display = "block";
         setInterval(game, 60);
         setInterval(changeTImer, 1000);
     });
     $("#restart").click(function () {
+        document.getElementById("canvas").style.display = "none";
         window.location.reload(true);
     });
 
