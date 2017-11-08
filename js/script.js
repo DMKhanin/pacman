@@ -5,8 +5,8 @@ $(document).ready(function () {
     document.addEventListener("keydown", control);
     var next_ind_x=16;
     var next_ind_y=21;
-    var save_position_x = 410;
-    var save_position_y = 310;
+    var save_position_x = 30;
+    var save_position_y = 110;
     var q;
     var e=0;
     var map = [ //15 20 
@@ -43,26 +43,38 @@ $(document).ready(function () {
     ];
 
     var packman = {
-        positionX: 410,
-        positionY: 310,
+        positionX: 30,
+        positionY: 110,
         rotation: 0,
-        currentIndX: 20,
-        currentIndY: 15,
+        currentIndX: 1,
+        currentIndY: 5,
         speed: 4,
-        save_position_x:390,
-        save_position_y: 290
+        save_position_x:30,
+        save_position_y: 110
     };
-
+    function move(){
+        if (packman.positionY+20 == packman.save_position_y){
+            switch (arguments[0]) {
+                case 0:  alert(1); return packman.currentIndX +1; break;
+                case 90: alert(1); return packman.currentIndY + 1;break;
+                case 180: alert(1); return packman.currentIndX - 1; break;
+                case 270: alert(1); return packman.currentIndY - 1; break;
+                default: return 0; break;
+                
+            }
+            packman.save_position_y = packman.positionY;
+        }
+    }
     function control() {
         switch (String.fromCharCode(event.keyCode)) {
             case "A":
-                packman.rotation = 180; left();
+                packman.rotation = 180;
                 break;
             case "W":
                 packman.rotation = 270;
                 break;
             case "D":
-                packman.rotation = 0; right();
+                packman.rotation = 0;
                 break;
             case "S":
                 packman.rotation = 90;
@@ -86,17 +98,55 @@ $(document).ready(function () {
         }
 
     }
+    function move(){
+        switch (packman.rotation){
+            case 0: 
+            if (packman.positionX-20 == packman.save_position_x){
+                 packman.currentIndX +=1; packman.save_position_x = packman.positionX
+                }; 
+            if(map[packman.currentIndY][packman.currentIndX+1]==0) {
+                packman.speed = 4;
+            } else {
+                packman.speed=0;
+            };
+            break;
+            case 180: 
+            if (packman.positionX+20 == packman.save_position_x){
+                 packman.currentIndX -=1; packman.save_position_x = packman.positionX
+                };
+            if(map[packman.currentIndY][packman.currentIndX-1]==0) {
+                     packman.speed = 4;
+                    }else {
+                        packman.speed=0;
+                    }; 
+           break;
+            case 90:
+            if (packman.positionY-20 == packman.save_position_y){
+                packman.currentIndY +=1; packman.save_position_y = packman.positionY
+               };
+           if(map[packman.currentIndY+1][packman.currentIndX]==0) {
+                       packman.speed = 4;
+                   }else {
+                       packman.speed=0;
+                   }; 
+            break;
+            case 270:
+            if (packman.positionY+20 == packman.save_position_y){
+                packman.currentIndY -=1; packman.save_position_y = packman.positionY
+               };
+            if(map[packman.currentIndY-1][packman.currentIndX]==0) {
+                packman.speed = 4;
+            }else {
+                packman.speed=0;
+            }; 
+            break;
+            
+        }
+    }
     function game() {
-        console.warn(packman.positionY);
         ctx.clearRect(0, 0, 800, 600);
         drawMap();
-        e++;
-        switch (packman.rotation){
-            case 0: right(); break;
-            case 180: left(); break;
-            case 90:  bottom(); break;
-            case 270: top(); break;
-        }
+        move();
         if (animation >= 0 && animation <= 8) {
             switch (packman.rotation) {
                 case 0: drawPackman(ctx, packman.positionX, packman.positionY, 10, (Math.PI) / 6, 5.7); break;
@@ -158,69 +208,7 @@ $(document).ready(function () {
         document.getElementById("help").style.display = "none";
     });
 
-    function top (){
-        if (packman.positionY+20 == packman.save_position_y){
-            switch (packman.rotation) {
-                case 0: packman.currentIndX += 1; next_ind_x = packman.currentIndX + 1; break;
-                case 90: packman.currentIndY += 1; next_ind_y = packman.currentIndY + 1; break;
-                case 180: packman.currentIndX -= 1; next_ind_x = packman.currentIndX - 1; break;
-                case 270: packman.currentIndY -= 1; next_ind_y = packman.currentIndY - 1; break;
-            }
-            e=0;
-            console.log(next_ind_y + " " + next_ind_x );
-            
-            if (map[next_ind_y-1][next_ind_x]==1){
-                packman.speed = 0;
-                console.log("STOP! " + packman.speed)
-            }
-            packman.save_position_x = packman.positionX;
-            packman.save_position_y = packman.positionY;
-            console.log(packman.currentIndY + " " +packman.currentIndX);
-        }
-    }
-    function bottom (){
-        if (packman.positionY-20 == packman.save_position_y){
 
-            packman.currentIndY += 1; next_ind_y = packman.currentIndY + 1;
-            e=0;
-            console.log(next_ind_y + " " + next_ind_x );
-            
-            if (map[next_ind_y-1][next_ind_x-1]==1){
-                packman.speed = 0;
-                console.log("STOP! " + packman.speed)
-            }
-            packman.save_position_y = packman.positionY;
-            console.log(packman.currentIndY + " " +packman.currentIndX);
-        }
-    }
-    function right (){
-        if (packman.positionX-20 == packman.save_position_x){
-               packman.currentIndX += 1; next_ind_x = packman.currentIndX + 1;
-            e=0;
-            console.log(next_ind_y + " " + next_ind_x );
-            
-            if (map[next_ind_y][next_ind_x]==1){
-                packman.speed = 0;
-                console.log("STOP! " + packman.speed)
-            }
-            packman.save_position_x = packman.positionX;
-            console.log(packman.currentIndY + " " +packman.currentIndX);
-        }
-    }
-    function left (){
-        if (packman.positionX+20 == packman.save_position_x){
-               packman.currentIndX -= 1; next_ind_x = packman.currentIndX - 1;
-            e=0;
-            console.log(next_ind_y + " " + next_ind_x );
-            
-            if (map[next_ind_y-1][next_ind_x-1]==1){
-                packman.speed = 0;
-                console.log("STOP! " + packman.speed)
-            }
-            packman.save_position_x = packman.positionX;
-            console.log(packman.currentIndY + " " +packman.currentIndX);
-        }
-    }
 })
 /*
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
